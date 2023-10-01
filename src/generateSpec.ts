@@ -104,7 +104,7 @@ export function getHeaderParams(route: IRoute): oa.ParameterObject[] {
     const schema = getParamSchema(headersMeta) as oa.ReferenceObject
     headers.push({
       in: 'header',
-      name: schema.$ref.split('/').pop() || '',
+      name: (schema.$ref||"").split('/').pop() || '',
       required: isRequired(headersMeta, route),
       schema,
     })
@@ -174,7 +174,7 @@ export function getQueryParams(
   if (queriesMeta) {
     const paramSchema = getParamSchema(queriesMeta) as oa.ReferenceObject
     // the last segment after '/'
-    const paramSchemaName = paramSchema.$ref.split('/').pop() || ''
+    const paramSchemaName = (paramSchema.$ref||"").split('/').pop() || ''
     const currentSchema = schemas[paramSchemaName]
 
     for (const [name, schema] of Object.entries(
